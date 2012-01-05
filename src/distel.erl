@@ -448,6 +448,33 @@ debug_toggle(Mod, Filename) ->
         false-> int_i(Mod, Filename), interpreted
     end.
 
+be_ready_debug(Mod) ->
+	[{options,Options},{version,_Version},_,{source,Source}] = Mod:module_info(compile),
+	case lists:member(debug_info, Options) of
+		false ->
+			compile_with_debug_info(Options, Source);
+		true ->
+			ok
+	end.
+
+compile_with_debug_info(Options, Source) ->
+	Outdir = string:substr(Source,1,string:rstr(Source,"/")),
+	Tmp_options = lists:keydelete(outdir,1,
+				  lists:delete(debug_info,
+				  lists:delete(no_debug_info,
+                  lists:delete({d,nodebug},
+                  lists:delete({d,debug},Options))))),
+	
+	Debug_options = lists:append(lists:append(lists:append(Tmp_options,
+														   [debug_info]),
+											  [{d,debug}]),
+								 [{outdir,Outdir}]),
+	case c:nc(Source,Debug_options) of
+		{ok,_} -> ok;
+		error -> error
+	end.
+
+
 debug_add(Modules) ->
     foreach(fun([Mod, Filename]) -> assert_int(Mod, Filename) end, Modules),
     ok.
