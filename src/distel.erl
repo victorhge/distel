@@ -445,7 +445,11 @@ null_gl() ->
 debug_toggle(Mod, Filename) ->
     case is_interpreted(Mod) of
         true -> int:n(Mod), uninterpreted;
-        false-> int_i(Mod, Filename), interpreted
+        false->
+            case be_ready_debug(Mod) of
+                ok -> int_i(Mod, Filename), interpreted;
+                error ->  uninterpreted
+            end
     end.
 
 be_ready_debug(Mod) ->
