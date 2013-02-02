@@ -107,7 +107,8 @@ about Emacs' online help, use \"\\[help-for-help]\".
   ;;
   ;; define-minor-mode is very inconvenient for redefining keybindings
   ;; so we do that by hand, below.
-  '(("\M-." 'undefined)))
+  '(;; ("\M-." 'undefined)
+    ))
 
 (defconst distel-keys
   '(("\C-c\C-di" edb-toggle-interpret)
@@ -116,7 +117,7 @@ about Emacs' online help, use \"\\[help-for-help]\".
     ("\C-c\C-ds" edb-synch-breakpoints)
     ("\C-c\C-dS" edb-save-dbg-state)
     ("\C-c\C-dR" edb-restore-dbg-state)
-    ("\C-c\C-dm" edb-monitor)          
+    ("\C-c\C-dm" edb-monitor)
     ("\C-c\C-d:" erl-eval-expression)
     ("\C-c\C-dL" erl-reload-module)
     ("\C-c\C-dr" erl-reload-modules)
@@ -141,10 +142,10 @@ about Emacs' online help, use \"\\[help-for-help]\".
     ("\C-c\C-dw" erl-who-calls)
     ("\C-c\C-dn" erl-choose-nodename)
     ("("         erl-openparen)
-    ;; Possibly "controversial" shorter keys
-    ("\M-."      erl-find-source-under-point)	; usually `find-tag'
-    ("\M-*"      erl-find-source-unwind) ; usually `pop-tag-mark'
-    ("\M-,"      erl-find-source-unwind) ; usually `tags-loop-continue'
+    ;; ;; Possibly "controversial" shorter keys
+    ;; ("\M-."      erl-find-source-under-point)	; usually `find-tag'
+    ;; ("\M-*"      erl-find-source-unwind) ; usually `pop-tag-mark'
+    ;; ("\M-,"      erl-find-source-unwind) ; usually `tags-loop-continue'
     ;;("\M-/"      erl-complete) ; usually `dabbrev-expand'
     )
   "Keys to bind in distel-mode-map.")
@@ -189,7 +190,7 @@ about Emacs' online help, use \"\\[help-for-help]\".
   (setq erlang-menu-items
 	(erlang-menu-delete 'distel-menu-items erlang-menu-items))
   (erlang-menu-init))
-  
+
 (defvar distel-menu-items
   '(nil
     ("Distel"
@@ -279,4 +280,3 @@ Please see the documentation of `erlang-menu-base-items'.")
   (let ((pos (point)))
     (insert string)
     (indent-rigidly pos (point) level)))
-
