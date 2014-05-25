@@ -816,7 +816,7 @@ When `distel-tags-compliant' is non-nil, or a numeric prefix argument
 is given, the user is prompted for the function to lookup (with a
 default.)"
   (interactive)
-  (apply #'erl-find-function
+  (apply #'erl-find-source
          (or (erl-read-call-mfa) (error "No call at point."))))
 
 (defun erl-find-source-unwind ()
